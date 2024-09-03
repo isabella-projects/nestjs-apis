@@ -6,7 +6,7 @@
 
 # 📝 Description
 
-## Using NestJS to for building REST & GraphQL APIs, including Docker integration, JWT, Unit & e2e tests and more..
+## Using NestJS for building REST & GraphQL APIs, including Docker integration, JWT, Unit & e2e tests and more..
 
 # 🛠 Tech Stack
 
