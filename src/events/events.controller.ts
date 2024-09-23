@@ -10,11 +10,15 @@ import {
     ParseIntPipe,
     Patch,
     Post,
+    Query,
 } from '@nestjs/common';
-import { CreateEventDTO, UpdateEventDTO } from './events.dto';
+import { CreateEventDTO, UpdateEventDTO } from './input/events.dto';
 import { Event } from './events.entity';
+import { Attendee } from './attendee.entity';
 import { Like, MoreThan, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EventsService } from './events.service';
+import { ListEvents } from './input/list.events';
 
 @Controller('/events')
 export class EventsController {
@@ -23,12 +27,17 @@ export class EventsController {
     constructor(
         @InjectRepository(Event)
         private readonly repository: Repository<Event>,
+        @InjectRepository(Attendee)
+        private readonly attendeeRepository: Repository<Attendee>,
+        private readonly eventsService: EventsService,
     ) {}
 
     @Get()
-    async findAll() {
+    async findAll(@Query() filter: ListEvents) {
+        this.logger.debug(filter);
         this.logger.log(`Hit the findAll route`);
-        const events = await this.repository.find();
+        const events =
+            await this.eventsService.getEventsWithAttendeeCountFiltered(filter);
         this.logger.debug(`Found ${events.length} events`);
         return events;
     }
@@ -53,11 +62,29 @@ export class EventsController {
         });
     }
 
+    @Get('practice2')
+    async practice2() {
+        // return await this.repository.findOne({
+        //     where: {
+        //         id: 1,
+        //     },
+        //     loadEagerRelations: false,
+        // });
+        const event = new Event();
+        event.id = 1;
+
+        const attendee = new Attendee();
+        attendee.name = 'Jerry The Second';
+        attendee.event = event;
+
+        await this.attendeeRepository.save(attendee);
+
+        return event;
+    }
+
     @Get(':id')
     async findOne(@Param('id', ParseIntPipe) id: number) {
-        const event = await this.repository.findOneBy({
-            id,
-        });
+        const event = await this.eventsService.getEvent(id);
 
         if (!event) {
             throw new NotFoundException();
