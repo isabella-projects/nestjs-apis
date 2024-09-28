@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Subject } from './subject.entity';
 import { Teacher } from './teacher.entity';
+// import { User } from 'src/auth/user.entity';
+// import { Profile } from 'src/auth/profile.entity';
 
 @Controller('school')
 export class TrainingController {
@@ -19,10 +21,17 @@ export class TrainingController {
             where: { id: 9 },
         });
 
-        const teacher1 = await this.subjectRepository.findOne({
+        /* OneToOne relationship
+        const user = new User();
+        const profile = new Profile();
+        user.profile = profile;
+        user.profile = null; // remove the relationship if it's nullable (nullable by default)
+        */
+
+        const teacher1 = await this.teacherRepository.findOne({
             where: { id: 3 },
         });
-        const teacher2 = await this.subjectRepository.findOne({
+        const teacher2 = await this.teacherRepository.findOne({
             where: { id: 4 },
         });
 
