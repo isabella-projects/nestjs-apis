@@ -9,6 +9,7 @@ import {
 import { Profile } from './profile.entity';
 import { Event } from 'src/events/events.entity';
 import { Expose } from 'class-transformer';
+import { Attendee } from 'src/events/attendee.entity';
 
 @Entity()
 export class User {
@@ -43,4 +44,7 @@ export class User {
     @OneToMany(() => Event, (event) => event.organizer)
     @Expose()
     organized: Event[];
+
+    @OneToMany(() => Attendee, (attendee) => attendee.user)
+    attended: Attendee[];
 }
