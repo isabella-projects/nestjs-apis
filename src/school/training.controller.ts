@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Subject } from './subject.entity';
 import { Teacher } from './teacher.entity';
-// import { User } from 'src/auth/user.entity';
-// import { Profile } from 'src/auth/profile.entity';
+// import { User } from './../auth/user.entity';
+// import { Profile } from './../auth/profile.entity';
 
 @Controller('school')
 export class TrainingController {
