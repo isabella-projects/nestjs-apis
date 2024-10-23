@@ -2,7 +2,7 @@
     <img src="https://i.imgur.com/YlGrpaq.png" width="800px" height="auto">
 </div>
 
-# 🌐 NestJS REST & GraphQL APIs
+# 🌐 NestJS Development
 
 # 📝 Description
 
